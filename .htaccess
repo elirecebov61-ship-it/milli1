@@ -1,0 +1,26 @@
+# Environment fayllarını qoru
+<Files ".env">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# PHP error-ları gizlət
+php_flag display_errors off
+php_flag display_startup_errors off
+php_value error_reporting 0
+
+# Directory listing-i söndür
+Options -Indexes
+
+# XSS və digər qorunmalar
+<IfModule mod_headers.c>
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "DENY"
+</IfModule>
+
+# Yalnız icazə verilən fayllar
+<FilesMatch "\.(php|html|css|js|png|jpg|jpeg|gif|svg|ico)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
