@@ -1,5 +1,9 @@
-# Environment fayllarını qoru
-<Files ".env">
+# =============================================
+# 🔥 TƏHLÜKƏSİZLİK - .htaccess
+# =============================================
+
+# .env faylını qoru (api/ qovluğunda)
+<Files "api/.env">
     Order Allow,Deny
     Deny from all
 </Files>
