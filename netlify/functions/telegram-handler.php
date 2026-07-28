@@ -1,20 +1,14 @@
 <?php
 // =============================================
-// 🔥 TELEGRAM HANDLER - YALNIZ .env-DƏN OXUYUR
+// 🔥 TELEGRAM HANDLER - SON VERSİYA
 // =============================================
 
-// 1. .env faylını oxu (təhlükəsiz)
-$envFile = __DIR__ . '/../.env';
+// 1. .env faylını oxu (api/ qovluğunda)
+$envFile = __DIR__ . '/.env';
 if (file_exists($envFile)) {
     $env = parse_ini_file($envFile);
 } else {
-    // .env faylı yoxdursa, api/ qovluğunun bir üstündə axtar
-    $envFile = __DIR__ . '/.env';
-    if (file_exists($envFile)) {
-        $env = parse_ini_file($envFile);
-    } else {
-        $env = false;
-    }
+    $env = false;
 }
 
 // 2. Tokenləri .env-dən oxu
@@ -26,7 +20,7 @@ if ($env) {
     $chatId = '';
 }
 
-// 3. Token yoxdursa xəta ver (heç bir yerdə token yazılmayacaq!)
+// 3. Token yoxdursa xəta ver
 if (empty($botToken) || empty($chatId)) {
     http_response_code(500);
     header('Content-Type: application/json');
